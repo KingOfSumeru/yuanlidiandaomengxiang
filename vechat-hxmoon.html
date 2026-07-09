@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VeChat</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;}
+body{background:#f5f5f5;max-width:760px;margin:0 auto;}
+/* 微信顶部导航栏 */
+.wechat-header{
+    background:#f7f7f7;
+    height:46px;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    border-bottom:1px solid #e6e6e6;
+    position:sticky;
+    top:0;
+    z-index:99;
+}
+.avatar-head{
+    width:32px;height:32px;border-radius:50%;background:#c9c9c9;margin-right:10px;
+}
+.chat-title{font-size:16px;font-weight:500;}
+/* 聊天容器 */
+.chat-wrap{
+    padding:16px;
+    padding-bottom:150px;
+}
+/* 底部固定区域容器 */
+.bottom-fixed {
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:760px;
+    display:flex;
+    flex-direction:column;
+}
+/* 底部输入栏 */
+.input-footer{
+    background:#fff;
+    border-top:1px solid #e6e6e6;
+    height:72px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 14px;
+}
+/* 底部声明区域 */
+.disclaimer-area {
+    text-align:center;
+    padding:12px;
+    background:#f0f4f8;
+    border-top:1px solid #d0d8e0;
+}
+.disclaimer-text {
+    font-size:12px;
+    color:#666;
+    margin-bottom:6px;
+}
+.copyright-text {
+    font-size:11px;
+    color:#888;
+}
+/* 日期分割线 */
+.date-line{
+    text-align:center;
+    color:#999;
+    font-size:13px;
+    margin:18px 0 8px;
+}
+/* 单条时间提示 */
+.time-tip{
+    text-align:center;
+    color:#999;
+    font-size:12px;
+    margin:10px 0;
+}
+/* 对方消息（陈秋月 左气泡） */
+.msg-left{
+    display:flex;
+    margin-bottom:14px;
+}
+.msg-left .avatar{
+    width:40px;height:40px;border-radius:6px;background:#bbbbbb;margin-right:8px;flex-shrink:0;
+}
+.bubble-left{
+    background:#ffffff;
+    padding:10px 12px;
+    border-radius:0 10px 10px 10px;
+    max-width:72%;
+    line-height:1.55;
+}
+/* 自己消息（何惠心 HX 右气泡） */
+.msg-right{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:14px;
+}
+.msg-right .avatar{
+    width:40px;height:40px;border-radius:6px;background:#66aaff;margin-left:8px;flex-shrink:0;
+}
+.bubble-right{
+    background:#95ec69;
+    color:#000;
+    padding:10px 12px;
+    border-radius:10px 0 10px 10px;
+    max-width:72%;
+    line-height:1.55;
+}
+/* 底部输入栏 */
+.input-footer{
+    background:#fff;
+    border-top:1px solid #e6e6e6;
+    height:72px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 14px;
+}
+#send-input{
+    flex:1;
+    height:42px;
+    background:#f3f3f3;
+    border:none;
+    border-radius:4px;
+    padding:0 14px;
+    font-size:15px;
+    outline:none;
+}
+#send-btn{
+    width:68px;
+    height:42px;
+    background:#07c160;
+    color:#fff;
+    border:none;
+    border-radius:4px;
+    font-size:15px;
+}
+</style>
+</head>
+<body>
+<!-- 顶部聊天栏 -->
+<div class="wechat-header">
+    <div class="avatar-head"></div>
+    <div class="chat-title">月亮代表我的心</div>
+</div>
+
+<!-- 聊天内容容器 -->
+<div class="chat-wrap" id="chatBox">
+    <!-- 2026-03-14 对话 -->
+    <div class="date-line">2026年3月14日</div>
+    <div class="time-tip">00:00</div>
+
+    <div class="msg-right">
+        <div class="bubble-right">我亲爱的月！！生日快乐啊啊啊啊啊！19岁了！</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">我祝愿你未来的每一天都安然自在，平安喜乐！</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">哇塞还有零点祝福，感动desu！</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">呜呜呜呜谢谢心儿 >3<</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">可惜这次不能和你一起过生日了</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">等我放暑假就回广东找你见面</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">可以可以！</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">其实我要你现在就出现在我面前</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">不然我5秒内引爆广东</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">6爆</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">其实理论上来说我还没有19岁</div>
+    </div>
+
+    <div class="time-tip">00:03</div>
+    <div class="msg-right">
+        <div class="bubble-right">何以见得？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我妈说我当时是下午5点多出生的喵。</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">所以我现在应该还是18岁</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">你记得你是啥时候出生的吗？</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">emmm其实我也不是很清楚，只是听之前家里老人说，我出生的时候外面本来阴天下着雨，但是剪脐带的时候外面突然天晴了，而且是出大太阳。</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">我不是在家里出生的吗</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">蛮奇怪的事就是，我爸准备进房看我妈的时候，发现门口有条青色的蛇</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">但是那个时候不应该是蛇出现的时候，我爸还吓一跳</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">好魔幻的出生</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">那就是上午快要中午的时候了吧？</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">感觉天将降大任于你诶</div>
+    </div>
+
+    <div class="time-tip">00:07</div>
+    <div class="msg-right">
+        <div class="bubble-right">这期神了</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">我刚问我妈，我不偏不倚就是在11:00出生的</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">牛逼</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">对了心，我要先睡了</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">明早学校还有个事儿要早起</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">嗯嗯你快去睡吧！生日快乐！</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">晚安～</div>
+    </div>
+
+    <!-- 2026-03-20 -->
+    <div class="date-line">2026年3月20日</div>
+    <div class="time-tip">23:13</div>
+    <div class="msg-right">
+        <div class="bubble-right">干我真的不想学了我好崩溃</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">0个人知道我们这次月考有多难。。。</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">卧槽我懂你</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我们也学得很难而且作业贼多，不按时交还要扣学分。。想干啥了这破学校。</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">感觉最近压力真的好大，我们系的人都卷得要死，有的在同时准备考四六级和打竞赛，有的甚至都找好暑期实验室实习了。</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">omg你们真吓到我了。</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">抱抱你</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">说到压力大，我最近找到了一个很好的免费心理咨询网站！</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">是真人沟通，而且全程都是免费的，我亲自试过</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我把我的烦心事都跟里面的咨询员说，说完我心里就舒坦多了</div>
+    </div>
+   <div class="msg-left">
+    <div class="avatar"></div>
+    <div class="bubble-left">
+        <a href="therapy.html" target="_blank" style="color:#0066cc;text-decoration:none;">静念心理在线咨询平台</a>
+    </div>
+</div>
+ 
+    <div class="time-tip">23:24</div>
+    <div class="msg-right">
+        <div class="bubble-right">我去你就不怕被骗个人信息然后人家开你盒吗</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">以后卖保健品就找你这样的</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">?</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">匿名提问来的 姐姐</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">你就放心好了</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">好吧我有空试试，谢谢你</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">不过你也要小心哦，你还记得上次被黄牛骗的那2000块不（doge</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">23:49</div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">ok你不要再说了，再说就烦了 :( </div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">没事再熬熬就放假了，到时候我回广东找你</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">嗯嗯我真的好想你（哭）</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">爱你</div>
+    </div>
+
+    <!-- 2026-04-30 -->
+    <div class="date-line">2026年4月30日</div>
+    <div class="time-tip">12:01</div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">跟你报备一下</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我过半个月有个社团活动</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">跟一个校外的社区去泊云山里的一个寺庙吃斋冥想</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我最近实在是压力太大了，想去放松放松</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">哇听起来不错哦</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">支持一波，你需要休息一下了</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">但是安不安全啊？有没有同行的朋友？需不需要我来陪你？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">12:10</div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">没事没事儿你也蛮忙的</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我跟同系的几个女生一起去啦，你就放心好了</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">嗯嗯好的，你要是觉得有一点点不安就马上发信息给叔叔阿姨或者给我哈！</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我爱你</div>
+    </div>
+
+    <!-- 2026-05-12 -->
+    <div class="date-line">2026年5月12日</div>
+    <div class="time-tip">00:03</div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">心，你在吗？</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我想和你见一面，等我从寺庙回来</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">好吗？</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">好啊好啊！没问题！咋了你谈恋爱了？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">嗯</div>
+    </div>
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">不是</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">你咋了？</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">没啥事吧？</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">啥时候？在哪见？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">02:30</div>
+    <div class="msg-right">
+        <div class="bubble-right">？月</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">你看到信息了吗？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">07:30</div>
+    <div class="msg-right">
+        <div class="bubble-right">月，你在吗？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我  没  事</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">你回答我的问题</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="msg-left">
+        <div class="avatar"></div>
+        <div class="bubble-left">我没事儿，我在学校里呢，昨天太困了就睡了没看到信息，又加上emo了哈哈哈</div>
+    </div>
+
+    <div class="msg-right">
+        <div class="bubble-right">好，你要是想见我，我也可以买车票去见你</div>
+        <div class="avatar"></div>
+    </div>
+
+    <!-- 昨天 -->
+    <div class="date-line">昨天</div>
+    <div class="time-tip">09:30</div>
+    <div class="msg-right">
+        <div class="bubble-right">月，你从寺庙回来了吗？</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">？</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">月，你在吗？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">13:30</div>
+    <div class="msg-right">
+        <div class="bubble-right">你别吓我</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">你要是想吓我，你成功了，但今天不是愚人节</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">这不好笑啊啊啊，快点回我信息！</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">你在哪里？</div>
+        <div class="avatar"></div>
+    </div>
+
+    <div class="time-tip">14:30</div>
+    <div class="msg-right">
+        <div class="bubble-right">？？？</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">【语音通话：对方无应答📞】</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">【视频通话：对方无应答📹】</div>
+        <div class="avatar"></div>
+    </div>
+    <div class="msg-right">
+        <div class="bubble-right">月？</div>
+        <div class="avatar"></div>
+    </div>
+</div>
+
+<!-- 底部固定区域 -->
+<div class="bottom-fixed">
+    <!-- 底部输入框区域 -->
+    <div class="input-footer">
+        <input id="send-input" placeholder="输入消息发送">
+        <button id="send-btn">发送</button>
+    </div>
+
+    <!-- 底部声明区域 -->
+    <div class="disclaimer-area">
+        <div class="disclaimer-text">本游戏中的人物、事件、地名及机构均为虚构，与现实无关。</div>
+        <div class="copyright-text">Copyright © 2026 KingOfSumeru. All Rights Reserved.</div>
+    </div>
+</div>
+
+<script>
+const chatBox = document.getElementById('chatBox');
+const input = document.getElementById('send-input');
+const sendBtn = document.getElementById('send-btn');
+
+function getNowTime(){
+    const d = new Date();
+    let h = String(d.getHours()).padStart(2,"0");
+    let m = String(d.getMinutes()).padStart(2,"0");
+    return `${h}:${m}`;
+}
+
+function sendMsg(){
+    let text = input.value.trim();
+    if(!text) return;
+    const nowTime = getNowTime();
+    const msgHtml = `
+        <div class="time-tip">${nowTime}</div>
+        <div class="msg-right">
+            <div class="bubble-right">${text.replaceAll("\n","<br>")}</div>
+            <div class="avatar"></div>
+        </div>
+    `;
+    chatBox.insertAdjacentHTML('beforeend',msgHtml);
+    input.value = "";
+    setTimeout(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+    }, 10);
+}
+
+sendBtn.addEventListener('click',sendMsg);
+input.addEventListener('keydown',e=>{
+    if(e.key === "Enter") sendMsg();
+})
+</script>
+</body>
+</html>

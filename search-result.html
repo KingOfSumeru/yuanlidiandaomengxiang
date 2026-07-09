@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>搜索结果 - 静念在线心理咨询平台</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "SimSun", "Consolas", monospace;
+}
+body {
+    color: #222222;
+    padding: 30px 70px;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+    min-height: 100vh;
+    font-size: 14px;
+    background-color: #fff0f5;
+    z-index: 1;
+}
+.lotus-border {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 0;
+}
+.lotus-border-left {
+    left: 0;
+}
+.lotus-border-right {
+    right: 0;
+}
+.lotus-border-right img {
+    transform: scaleX(-1);
+}
+.lotus-border img {
+    width: 40px;
+    height: 40px;
+}
+.site-header {
+    border: 2px double #99aabb;
+    background: #ffffff;
+    padding: 16px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.lotus-left {
+    width: 48px;
+    height: 48px;
+}
+.lotus-right {
+    width: 48px;
+    height: 48px;
+    transform: scaleX(-1);
+}
+.site-header h1 {
+    color: #e91e63;
+    font-family: "KaiTi", "STKaiti", "楷体_GB2312", serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 
+        -2px -2px 0 #ffeb3b,
+        2px -2px 0 #ffeb3b,
+        -2px 2px 0 #ffeb3b,
+        2px 2px 0 #ffeb3b;
+}
+.sub-desc {
+    color: #556677;
+    font-size: 13px;
+}
+.card {
+    background: #ffffff;
+    border: 2px double #b0c0d0;
+    padding: 20px;
+    margin-bottom: 18px;
+}
+.card h2 {
+    color: #334455;
+    font-size: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed #ccd8e8;
+}
+.card p {
+    margin-bottom: 8px;
+    color: #445566;
+}
+.back-box {
+    text-align: center;
+    margin-top: 20px;
+}
+.back-link {
+    color: #336699;
+    text-decoration: none;
+    font-size: 14px;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+.bottom-tip {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: #667788;
+    border-top:1px dashed #ccd8e8;
+    padding-top:12px;
+}
+</style>
+</head>
+<body>
+<div class="lotus-border lotus-border-left">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+</div>
+<div class="lotus-border lotus-border-right">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+</div>
+
+<div class="site-header">
+    <div class="title-row">
+        <img src="lotus.png" class="lotus-left" alt="lotus">
+        <h1>静念在线心理咨询平台</h1>
+        <img src="lotus.png" class="lotus-right" alt="lotus">
+    </div>
+    <p class="sub-desc">2012年建站 | 全程匿名文字咨询板块</p>
+</div>
+
+<div class="card">
+    <h2>搜索结果</h2>
+    <p id="search-result-text"></p>
+</div>
+
+<div class="back-box">
+    <a href="therapy.html" class="back-link">← 返回首页</a>
+</div>
+
+<div class="bottom-tip">
+    本游戏中的人物、事件、地名及机构均为虚构，与现实无关。
+</div>
+
+<div style="text-align:center;margin-top:10px;padding:10px;font-size:11px;color:#888;">
+    Copyright © 2026 KingOfSumeru. All Rights Reserved.
+</div>
+
+<script>
+function getKeyword() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var keyword = urlParams.get('keyword');
+    var resultText = document.getElementById('search-result-text');
+    if (keyword) {
+        resultText.innerHTML = '抱歉，没有找到与"<strong>' + keyword + '</strong>"相关的结果。';
+    } else {
+        resultText.innerHTML = '抱歉，没有找到与"<strong></strong>"相关的结果。';
+    }
+}
+getKeyword();
+</script>
+</body>
+</html>

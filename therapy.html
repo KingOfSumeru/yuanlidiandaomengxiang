@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>静念在线心理咨询平台</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "SimSun", "Consolas", monospace;
+}
+body {
+    color: #222222;
+    padding: 30px 70px;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+    min-height: 100vh;
+    font-size: 14px;
+    background-color: #fff0f5;
+    z-index: 1;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.lotus-border {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 0;
+}
+.lotus-border-left {
+    left: 0;
+}
+.lotus-border-right {
+    right: 0;
+}
+.lotus-border-right img {
+    transform: scaleX(-1);
+}
+.lotus-border img {
+    width: 40px;
+    height: 40px;
+}
+/* 顶部功能栏 */
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.login-link {
+    color: #223344;
+    font-size: 14px;
+    text-decoration: none;
+}
+.login-link:hover {
+    text-decoration: underline;
+}
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.search-box input {
+    padding: 5px 8px;
+    border: 1px solid #b0c0d0;
+    font-size: 13px;
+}
+.search-box button {
+    padding: 5px 12px;
+    border: 1px outset #dde4ee;
+    background: #e6ecf5;
+    cursor: pointer;
+    font-size: 13px;
+}
+.search-box button:hover {
+    background: #dde6f2;
+}
+/* 顶部论坛标题栏 白底双线复古边框 */
+.site-header {
+    border: 2px double #99aabb;
+    background: #ffffff;
+    padding: 16px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.lotus-left {
+    width: 48px;
+    height: 48px;
+}
+.lotus-right {
+    width: 48px;
+    height: 48px;
+    transform: scaleX(-1);
+}
+.site-header h1 {
+    color: #e91e63;
+    font-family: "KaiTi", "STKaiti", "楷体_GB2312", serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 
+        -2px -2px 0 #ffeb3b,
+        2px -2px 0 #ffeb3b,
+        -2px 2px 0 #ffeb3b,
+        2px 2px 0 #ffeb3b;
+}
+.sub-desc {
+    color: #556677;
+    font-size: 13px;
+}
+
+/* 横向复古栏目导航 */
+.tab-nav{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    background: #f0f3f8;
+    border: 1px solid #b0c0d0;
+    padding: 8px;
+    margin-bottom: 30px;
+}
+.tab-item{
+    flex: 1;
+    min-width: 105px;
+    text-align: center;
+    padding: 9px 4px;
+    border: 1px outset #dde4ee;
+    color: #223344;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    background: #e6ecf5;
+}
+/* 当前激活标签 凹陷按压效果 */
+.tab-item.active{
+    background: #d1dceb;
+    border: inset 1px #a0b4cc;
+    color: #112233;
+}
+.tab-item:hover:not(.active){
+    background: #dde6f2;
+}
+
+/* 论坛板块卡片 纯白底色老式边框 */
+.card {
+    background: #ffffff;
+    border: 2px double #b0c0d0;
+    padding: 22px;
+    margin-bottom: 26px;
+}
+.card h2 {
+    color: #2a405c;
+    font-size: 17px;
+    margin-bottom: 16px;
+    border-bottom: 1px dashed #b0c0d0;
+    padding-bottom: 6px;
+}
+.card p {
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+/* 图片容器 */
+.img-block{
+    text-align:center;
+    margin:20px 0;
+    padding:10px;
+    border:1px solid #b0c0d0;
+    background:#f7f9fc;
+}
+.img-block img{
+    max-width:88%;
+    border:1px solid #99aabb;
+}
+.img-caption{
+    font-size:12px;
+    color:#667788;
+    margin-top:4px;
+}
+/* 音频视频容器 */
+.media-box{
+    margin:18px 0;
+    padding:14px;
+    background:#f4f7fc;
+    border:1px solid #b0c0d0;
+}
+/* 老式内凹输入框 */
+.text-area {
+    width: 100%;
+    height: 140px;
+    margin-top: 10px;
+    background: #fcfdff;
+    border: 1px inset #a0b4cc;
+    color: #222;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+}
+.text-area::placeholder {
+    color: #778899;
+}
+/* 老式凸起提交按钮 */
+.submit-btn {
+    margin-top: 14px;
+    padding: 7px 28px;
+    background: #e6ecf5;
+    color: #112233;
+    border: outset 2px #c0d0e2;
+    font-size: 14px;
+    cursor: pointer;
+}
+.submit-btn:active {
+    border-style: inset;
+}
+/* 返回聊天页区域 */
+.back-box {
+    text-align: center;
+    margin-top: 50px;
+    padding:12px;
+    border:1px dashed #b0c0d0;
+    background:#f7f9fc;
+}
+.back-link {
+    color: #2f5b94;
+    text-decoration: underline;
+    font-size: 14px;
+}
+.back-link:hover {
+    color: #1f4066;
+}
+/* 页脚提示文字 */
+.bottom-tip {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 12px;
+    color: #667788;
+    border-top:1px dashed #ccd8e8;
+    padding-top:12px;
+}
+</style>
+</head>
+<body>
+<div class="lotus-border lotus-border-left">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+</div>
+<div class="lotus-border lotus-border-right">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+    <img src="white lotus.png" alt="lotus">
+</div>
+<div class="top-bar">
+    <a href="login.html" class="login-link">管理员登陆</a>
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="搜索..." onkeydown="if(event.keyCode===13)handleSearch()">
+        <button onclick="handleSearch()">搜索</button>
+    </div>
+</div>
+<div class="site-header">
+    <div class="title-row">
+        <img src="lotus.png" class="lotus-left" alt="lotus">
+        <h1>静念在线心理咨询平台</h1>
+        <img src="lotus.png" class="lotus-right" alt="lotus">
+    </div>
+    <p class="sub-desc">2012年建站 | 全程匿名文字咨询板块</p>
+</div>
+
+<!-- 横向复古栏目导航 -->
+<div class="tab-nav">
+    <a class="tab-item active">心理咨询</a>
+    <a class="tab-item">在线倾诉</a>
+    <a class="tab-item">塔罗占卜</a>
+    <a class="tab-item">友情咨询</a>
+    <a class="tab-item">爱情咨询</a>
+</div>
+
+<div class="card">
+    <h2>【板块公告】平台服务说明</h2>
+    <p>1. 本站无需注册实名，所有对话加密存档，不会收集访客个人信息；</p>
+    <p>2. 板块在线咨询师持证值守，倾诉不限时长，完全免费开放；</p>
+    <p>3. 仅支持文字留言咨询，无语音、视频功能，最大保护访客隐私。</p>
+</div>
+
+<div class="card">
+    <h2>【配图】线下咨询室实拍</h2>
+    <div class="img-block">
+        <img src="consult_room.jpg">
+        <div class="img-caption">图：线下咨询房间实拍存档</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>【附件】咨询室环境背景音</h2>
+    <div class="media-box">
+        <p>室内安静白噪音 · 咨询现场录制音频</p>
+        <audio src="room_noise.mp3" controls style="margin-top:6px;width:100%;">
+    </div>
+</div>
+
+<div class="card">
+    <h2>【访客上传影像记录】</h2>
+    <div class="media-box">
+        <video src="clip_record.mp4" controls style="max-width:100%;border:1px solid #b0c0d0;"></video>
+    </div>
+</div>
+
+<div class="card">
+    <h2>【值班咨询师档案】苏老师</h2>
+    <p>在线时段：24小时全天值守</p>
+    <p>下方留言框填写内心困扰，提交帖子即可开启一对一咨询对话。</p>
+</div>
+
+<div class="card">
+    <h2>【匿名留言发帖框】</h2>
+    <textarea class="text-area" placeholder="在此输入你的心事、烦恼、困惑，提交帖子..."></textarea>
+    <button class="submit-btn">提交留言帖子</button>
+</div>
+
+<div class="back-box">
+    <a href="vechat-hxmoon.html" class="back-link">← 返回微信聊天记录页面</a>
+</div>
+
+<div class="bottom-tip">
+    本游戏中的人物、事件、地名及机构均为虚构，与现实无关。
+</div>
+
+<div style="text-align:center;margin-top:10px;padding:10px;font-size:11px;color:#888;">
+    Copyright © 2026 KingOfSumeru. All Rights Reserved.
+</div>
+
+<script>
+function handleSearch() {
+    var keyword = document.getElementById('search-input').value.trim();
+    if (keyword) {
+        window.location.href = 'search-result.html?keyword=' + encodeURIComponent(keyword);
+    } else {
+        window.location.href = 'search-result.html';
+    }
+}
+</script>
+</body>
+</html>
